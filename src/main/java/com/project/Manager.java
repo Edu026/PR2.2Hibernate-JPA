@@ -3,7 +3,6 @@ package com.project;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -36,13 +35,13 @@ public class Manager {
         factory.close();
     }
   
-    public static Cart addCart(String type){
+    public static Ciutat addCiutat(String nom, String pais, int codiPostal){
         Session session = factory.openSession();
         Transaction tx = null;
-        Cart result = null;
+        Ciutat result = null;
         try {
             tx = session.beginTransaction();
-            result = new Cart(type);
+            result = new Ciutat(nom, pais, codiPostal);
             session.save(result); 
             tx.commit();
         } catch (HibernateException e) {
@@ -55,13 +54,13 @@ public class Manager {
         return result;
     }
 
-    public static Item addItem(String name){
+    public static Ciutada addCiutada(long ciutatId, String nom, String cognom, int edat ){
         Session session = factory.openSession();
         Transaction tx = null;
-        Item result = null;
+        Ciutada result = null;
         try {
             tx = session.beginTransaction();
-            result = new Item(name);
+            result = new Ciutada(nom, cognom, edat, ciutatId);
             session.save(result); 
             tx.commit();
         } catch (HibernateException e) {
@@ -91,6 +90,9 @@ public class Manager {
         return obj;
     }
 
+
+
+/* 
     public static void updateItem(long itemId, String name){
         Session session = factory.openSession();
         Transaction tx = null;
@@ -106,25 +108,8 @@ public class Manager {
         } finally {
             session.close(); 
         }
-    }
+    } */
     
-    public static void updateCart(long cartId, String type, Set<Item> items){
-        Session session = factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Cart obj = (Cart) session.get(Cart.class, cartId); 
-            obj.setType(type);
-            obj.setItems(items);
-            session.update(obj); 
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace(); 
-        } finally {
-            session.close(); 
-        }
-    }
   
     public static <T> void delete(Class<? extends T> clazz, Serializable id){
         Session session = factory.openSession();
@@ -141,6 +126,8 @@ public class Manager {
             session.close(); 
         }
     }
+
+    // REVISAR
 
     public static <T> Collection<?> listCollection(Class<? extends T> clazz) {
         return listCollection(clazz, "");

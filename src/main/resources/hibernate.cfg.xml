@@ -3,7 +3,7 @@
 <hibernate-configuration>
    <session-factory>
       <!-- List of XML mapping files -->
-      <mapping class = "com.project.Cart"/>
-      <mapping class = "com.project.Item"/>
+      <mapping class = "com.project.Ciutat"/>
+      <mapping class = "com.project.Ciutada"/>
    </session-factory>
 </hibernate-configuration>
